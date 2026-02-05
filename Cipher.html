@@ -3,110 +3,58 @@
 <head>
   <meta charset="UTF-8">
   <title>Caesar Cipher Tool</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f4f9;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-    .container {
-      width: 400px;
-      background: #fff;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    }
-    .tabs {
-      display: flex;
-      margin-bottom: 15px;
-    }
-    .tab {
-      flex: 1;
-      padding: 10px;
-      text-align: center;
-      cursor: pointer;
-      background: #ddd;
-      border-radius: 4px 4px 0 0;
-    }
-    .tab.active {
-      background: #444;
-      color: #fff;
-    }
-    .section {
-      display: none;
-    }
-    .section.active {
-      display: block;
-    }
-    label {
-      display: block;
-      margin: 10px 0 5px;
-    }
-    input {
-      width: 100%;
-      padding: 8px;
-      margin-bottom: 10px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-    .result {
-      padding: 10px;
-      border-radius: 4px;
-      margin-bottom: 10px;
-      font-weight: bold;
-    }
-    .encrypt-result {
-      background: #ffdddd;
-    }
-    .decrypt-result {
-      background: #ddeeff;
-    }
-    button {
-      width: 100%;
-      padding: 10px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 16px;
-    }
-    .encrypt-btn {
-      background: #d33;
-      color: #fff;
-    }
-    .decrypt-btn {
-      background: #339;
-      color: #fff;
-    }
-  </style>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-  <div class="container">
-    <div class="tabs">
-      <div class="tab active" id="encrypt-tab">Encrypt</div>
-      <div class="tab" id="decrypt-tab">Decrypt</div>
+<body class="flex justify-center items-center h-screen bg-gray-100 font-sans">
+  <div class="w-[400px] bg-white p-6 rounded-lg shadow-lg">
+    <!-- Tabs -->
+    <div class="flex mb-4">
+      <div id="encrypt-tab" 
+           class="flex-1 text-center py-2 cursor-pointer rounded-t-md bg-gray-700 text-white">
+        Encrypt
+      </div>
+      <div id="decrypt-tab" 
+           class="flex-1 text-center py-2 cursor-pointer rounded-t-md bg-gray-300">
+        Decrypt
+      </div>
     </div>
 
     <!-- Encrypt Section -->
-    <div class="section active" id="encrypt-section">
-      <label>Plain Text:</label>
-      <input type="text" id="plainText">
-      <label>Shift:</label>
-      <input type="number" id="shiftEncrypt" value="9">
-      <div class="result encrypt-result" id="cipherText"></div>
-      <button class="encrypt-btn" onclick="encrypt()">Encrypt</button>
+    <div id="encrypt-section" class="block">
+      <label class="block mb-1">Plain Text:</label>
+      <input type="text" id="plainText" 
+             class="w-full p-2 mb-3 border border-gray-300 rounded-md">
+      
+      <label class="block mb-1">Shift:</label>
+      <input type="number" id="shiftEncrypt" value="9" 
+             class="w-full p-2 mb-3 border border-gray-300 rounded-md">
+      
+      <div id="cipherText" 
+           class="p-3 mb-3 rounded-md font-bold bg-red-100"></div>
+      
+      <button onclick="encrypt()" 
+              class="w-full py-2 rounded-md bg-red-600 text-white font-semibold">
+        Encrypt
+      </button>
     </div>
 
     <!-- Decrypt Section -->
-    <div class="section" id="decrypt-section">
-      <label>Cipher Text:</label>
-      <input type="text" id="cipherInput">
-      <label>Shift:</label>
-      <input type="number" id="shiftDecrypt" value="9">
-      <div class="result decrypt-result" id="plainResult">...</div>
-      <button class="decrypt-btn" onclick="decrypt()">Decrypt</button>
+    <div id="decrypt-section" class="hidden">
+      <label class="block mb-1">Cipher Text:</label>
+      <input type="text" id="cipherInput" 
+             class="w-full p-2 mb-3 border border-gray-300 rounded-md">
+      
+      <label class="block mb-1">Shift:</label>
+      <input type="number" id="shiftDecrypt" value="9" 
+             class="w-full p-2 mb-3 border border-gray-300 rounded-md">
+      
+      <div id="plainResult" 
+           class="p-3 mb-3 rounded-md font-bold bg-blue-100"></div>
+      
+      <button onclick="decrypt()" 
+              class="w-full py-2 rounded-md bg-blue-600 text-white font-semibold">
+        Decrypt
+      </button>
     </div>
   </div>
 
@@ -118,16 +66,21 @@
     const decryptSection = document.getElementById("decrypt-section");
 
     encryptTab.onclick = () => {
-      encryptTab.classList.add("active");
-      decryptTab.classList.remove("active");
-      encryptSection.classList.add("active");
-      decryptSection.classList.remove("active");
+      encryptTab.classList.add("bg-gray-700","text-white");
+      encryptTab.classList.remove("bg-gray-300");
+      decryptTab.classList.add("bg-gray-300");
+      decryptTab.classList.remove("bg-gray-700","text-white");
+      encryptSection.classList.remove("hidden");
+      decryptSection.classList.add("hidden");
     };
+
     decryptTab.onclick = () => {
-      decryptTab.classList.add("active");
-      encryptTab.classList.remove("active");
-      decryptSection.classList.add("active");
-      encryptSection.classList.remove("active");
+      decryptTab.classList.add("bg-gray-700","text-white");
+      decryptTab.classList.remove("bg-gray-300");
+      encryptTab.classList.add("bg-gray-300");
+      encryptTab.classList.remove("bg-gray-700","text-white");
+      decryptSection.classList.remove("hidden");
+      encryptSection.classList.add("hidden");
     };
 
     // Caesar Cipher functions

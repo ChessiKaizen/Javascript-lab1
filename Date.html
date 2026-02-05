@@ -4,23 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Date</title>
-    <p id="Date"></p>
 </head>
 <body>
+    <p id="Date"></p>
     <script>
-         const d= new Date();
-         let hours=d.getHours();
+      function showAlert(){
+         alert("Start the clock now!");
+         clearInterval(myInterval);
+      }
+      function showTime(){
+         const now=new Date();
+         const timeString=now.toLocaleTimeString();
+         let hours=now.getHours();
          let message;
          if(hours<12){
             message="Good morning";
          }
          else if(hours<18){
-            messgae="Good afternoon";
+            message="Good afternoon";
          }
          else {
-            message= "Good evening";
+            message="Good evening";
          }
-        document.getElementById("Date").textContent=message;
+        document.getElementById("Date").textContent=message + " - " + timeString;
+      }
+      const myInterval = setInterval(showTime, 1000);
+      showTime();
     </script>
 </body>
 </html>
