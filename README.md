@@ -1,4 +1,4 @@
-*Javascript Lab *
+**Javascript Lab**
 -leapyear.html
 -joinelement.html
 -Date.html
