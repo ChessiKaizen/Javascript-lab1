@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Date</title>
+    <p id="Date"></p>
+</head>
+<body>
+    <script>
+         const d= new Date();
+         let hours=d.getHours();
+         let message;
+         if(hours<12){
+            message="Good morning";
+         }
+         else if(hours<18){
+            messgae="Good afternoon";
+         }
+         else {
+            message= "Good evening";
+         }
+        document.getElementById("Date").textContent=message;
+    </script>
+</body>
+</html>

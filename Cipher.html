@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Caesar Cipher Tool</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      width: 400px;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .tabs {
+      display: flex;
+      margin-bottom: 15px;
+    }
+    .tab {
+      flex: 1;
+      padding: 10px;
+      text-align: center;
+      cursor: pointer;
+      background: #ddd;
+      border-radius: 4px 4px 0 0;
+    }
+    .tab.active {
+      background: #444;
+      color: #fff;
+    }
+    .section {
+      display: none;
+    }
+    .section.active {
+      display: block;
+    }
+    label {
+      display: block;
+      margin: 10px 0 5px;
+    }
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .result {
+      padding: 10px;
+      border-radius: 4px;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+    .encrypt-result {
+      background: #ffdddd;
+    }
+    .decrypt-result {
+      background: #ddeeff;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    .encrypt-btn {
+      background: #d33;
+      color: #fff;
+    }
+    .decrypt-btn {
+      background: #339;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="tabs">
+      <div class="tab active" id="encrypt-tab">Encrypt</div>
+      <div class="tab" id="decrypt-tab">Decrypt</div>
+    </div>
+
+    <!-- Encrypt Section -->
+    <div class="section active" id="encrypt-section">
+      <label>Plain Text:</label>
+      <input type="text" id="plainText">
+      <label>Shift:</label>
+      <input type="number" id="shiftEncrypt" value="3">
+      <div class="result encrypt-result" id="cipherText">...</div>
+      <button class="encrypt-btn" onclick="encrypt()">Encrypt</button>
+    </div>
+
+    <!-- Decrypt Section -->
+    <div class="section" id="decrypt-section">
+      <label>Cipher Text:</label>
+      <input type="text" id="cipherInput">
+      <label>Shift:</label>
+      <input type="number" id="shiftDecrypt" value="3">
+      <div class="result decrypt-result" id="plainResult">...</div>
+      <button class="decrypt-btn" onclick="decrypt()">Decrypt</button>
+    </div>
+  </div>
+
+  <script>
+    // Tab switching
+    const encryptTab = document.getElementById("encrypt-tab");
+    const decryptTab = document.getElementById("decrypt-tab");
+    const encryptSection = document.getElementById("encrypt-section");
+    const decryptSection = document.getElementById("decrypt-section");
+
+    encryptTab.onclick = () => {
+      encryptTab.classList.add("active");
+      decryptTab.classList.remove("active");
+      encryptSection.classList.add("active");
+      decryptSection.classList.remove("active");
+    };
+    decryptTab.onclick = () => {
+      decryptTab.classList.add("active");
+      encryptTab.classList.remove("active");
+      decryptSection.classList.add("active");
+      encryptSection.classList.remove("active");
+    };
+
+    // Caesar Cipher functions
+    function caesarShift(str, amount) {
+      if (amount < 0) return caesarShift(str, amount + 26);
+      return str.split('').map(char => {
+        if (/[a-z]/i.test(char)) {
+          let code = char.charCodeAt(0);
+          let base = (code >= 65 && code <= 90) ? 65 : 97;
+          return String.fromCharCode(((code - base + amount) % 26) + base);
+        }
+        return char;
+      }).join('');
+    }
+
+    function encrypt() {
+      const text = document.getElementById("plainText").value;
+      const shift = parseInt(document.getElementById("shiftEncrypt").value);
+      document.getElementById("cipherText").textContent = caesarShift(text, shift);
+    }
+
+    function decrypt() {
+      const text = document.getElementById("cipherInput").value;
+      const shift = parseInt(document.getElementById("shiftDecrypt").value);
+      document.getElementById("plainResult").textContent = caesarShift(text, -shift);
+    }
+  </script>
+</body>
+</html>
